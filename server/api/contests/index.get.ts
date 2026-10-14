@@ -1,6 +1,8 @@
 import { getDb } from '../../utils/firebaseAdmin'
+import fallbackContests from '../../../data/contests.json'
 
-export default defineEventHandler(async () => {
+export default defineEventHandler(async (event) => {
+  setHeader(event, 'cache-control', 'public, s-maxage=60, stale-while-revalidate=300')
   const db = getDb()
   const snap = await db.collection('contests').get()
   const now = Date.now()

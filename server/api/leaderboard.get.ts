@@ -1,6 +1,7 @@
 import { getDb } from '../utils/firebaseAdmin'
 
 export default defineEventHandler(async (event) => {
+  setHeader(event, 'cache-control', 'public, s-maxage=30, stale-while-revalidate=120')
   const subject = String(getQuery(event).subject || 'toan')
   const db = getDb()
 

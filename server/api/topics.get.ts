@@ -4,6 +4,7 @@ import { requireUser } from '../utils/auth'
 import fallbackTopics from '../../data/topics.json'
 
 export default defineEventHandler(async (event) => {
+  setHeader(event, 'cache-control', 'public, s-maxage=60, stale-while-revalidate=300')
   const subject = String(getQuery(event).subject || '')
 
   try {
