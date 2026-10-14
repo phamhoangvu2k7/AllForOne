@@ -1,0 +1,75 @@
+[
+  {
+    "id": "toan12_dao-ham-cuc-tri",
+    "subject": "toan",
+    "name": "Khảo sát hàm số, Đạo hàm & Cực trị",
+    "grade": 12,
+    "order": 1,
+    "icon": "📈"
+  },
+  {
+    "id": "toan12_nguyen-ham-tich-phan",
+    "subject": "toan",
+    "name": "Nguyên hàm, Tích phân & Ứng dụng",
+    "grade": 12,
+    "order": 2,
+    "icon": "∫"
+  },
+  {
+    "id": "toan12_mu-logarit",
+    "subject": "toan",
+    "name": "Hàm số Mũ & Logarit",
+    "grade": 12,
+    "order": 3,
+    "icon": "e^x"
+  },
+  {
+    "id": "toan12_hinh-hoc-oxyz",
+    "subject": "toan",
+    "name": "Phương pháp tọa độ Oxyz",
+    "grade": 12,
+    "order": 4,
+    "icon": "📐"
+  },
+  {
+    "id": "toan12_xac-suat",
+    "subject": "toan",
+    "name": "Xác suất & Biến ngẫu nhiên",
+    "grade": 12,
+    "order": 5,
+    "icon": "🎲"
+  },
+  {
+    "id": "ly12_dao-dong-co",
+    "subject": "ly",
+    "name": "Dao động cơ học",
+    "grade": 12,
+    "order": 1,
+    "icon": "⏱️"
+  },
+  {
+    "id": "ly12_song-co",
+    "subject": "ly",
+    "name": "Sóng cơ & Giao thoa sóng",
+    "grade": 12,
+    "order": 2,
+    "icon": "🌊"
+  },
+  {
+    "id": "ly12_dien-xoay-chieu",
+    "subject": "ly",
+    "name": "Dòng điện xoay chiều",
+    "grade": 12,
+    "order": 3,
+    "icon": "⚡"
+  },
+  {
+    "id": "ly12_song-anh-sang",
+    "subject": "ly",
+    "name": "Sóng ánh sáng & Lượng tử",
+    "grade": 12,
+    "order": 4,
+    "icon": "💡"
+  }
+]
+

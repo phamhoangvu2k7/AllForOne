@@ -10,8 +10,28 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@google/genai": "^2.29.1",
+    "chart.js": "^4.5.1",
+    "dompurify": "^3.4.17",
+    "firebase": "^13.0.0",
+    "firebase-admin": "^14.5.0",
+    "katex": "^0.19.0",
+    "marked": "^18.1.1",
+    "marked-katex-extension": "^5.1.13",
     "nuxt": "^4.6.1",
     "vue": "^3.5.43",
+    "vue-chartjs": "^5.3.4",
     "vue-router": "^5.4.0"
+  },
+  "devDependencies": {
+    "@nuxtjs/tailwindcss": "^6.14.0",
+    "@types/dompurify": "^3.2.0",
+    "@types/katex": "^0.16.8",
+    "autoprefixer": "10.4.20",
+    "dotenv": "^18.0.7",
+    "postcss": "8.4.49",
+    "tailwindcss": "^3.4.17",
+    "tsx": "^4.23.15",
+    "vitest": "^5.0.4"
   }
 }

@@ -17,8 +17,16 @@ logs
 .DS_Store
 .fleet
 .idea
+.vscode
+.vercel
+
+# AI / Agent Skills Tools
+.agents
+.aider-desk
+skills-lock.json
 
 # Local env files
 .env
 .env.*
 !.env.example
+

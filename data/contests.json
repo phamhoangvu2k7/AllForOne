@@ -1,0 +1,38 @@
+[
+  {
+    "id": "contest_toan_w42",
+    "title": "Contest Toán tuần 42 — Khảo sát hàm số & Tích phân",
+    "subject": "toan",
+    "description": "Thử thách 4 câu trọng tâm bám sát cấu trúc đề thi tốt nghiệp THPT 2026. Chấm điểm theo thời gian và cập nhật Elo realtime.",
+    "durationMin": 30,
+    "startTime": "2026-10-10T00:00:00.000Z",
+    "endTime": "2026-10-20T23:59:59.000Z",
+    "questionIds": [
+      "toan12_dh_001",
+      "toan12_dh_002",
+      "toan12_dh_003",
+      "toan12_tp_002"
+    ],
+    "participantsCount": 12,
+    "status": "running"
+  },
+  {
+    "id": "contest_ly_w42",
+    "title": "Contest Vật lý tuần 42 — Dao động & Sóng ánh sáng",
+    "subject": "ly",
+    "description": "Đấu trường Vật lý 12 quy tụ các bài toán Dao động cơ, Sóng cơ và Điện xoay chiều hay và lạ.",
+    "durationMin": 45,
+    "startTime": "2026-10-16T12:00:00.000Z",
+    "endTime": "2026-10-22T23:59:59.000Z",
+    "questionIds": [
+      "ly12_dd_001",
+      "ly12_dd_002",
+      "ly12_dd_003",
+      "ly12_sc_001",
+      "ly12_dxc_001"
+    ],
+    "participantsCount": 8,
+    "status": "scheduled"
+  }
+]
+

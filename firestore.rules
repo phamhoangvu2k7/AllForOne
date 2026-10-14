@@ -1,0 +1,58 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function isOwner(uid) { return signedIn() && request.auth.uid == uid; }
+
+    match /topics/{id} { allow read: if true; allow write: if false; }
+
+    match /questions/{id} {
+      allow read: if signedIn() && resource.data.status == 'published';
+      allow write: if false;
+    }
+
+    // Đáp án: tuyệt đối không cho client đọc/ghi
+    match /questionKeys/{id} { allow read, write: if false; }
+
+    match /users/{uid} {
+      allow read: if isOwner(uid);
+      allow create: if isOwner(uid);
+      allow update: if isOwner(uid)
+        && request.resource.data.diff(resource.data).affectedKeys()
+           .hasOnly(['displayName','school','province','grade']);
+      match /{sub}/{doc} {
+        allow read: if isOwner(uid);
+        allow write: if false;   // chỉ server ghi rating, solved, activity, quota
+      }
+    }
+
+    match /attempts/{id} {
+      allow read: if signedIn() && resource.data.uid == request.auth.uid;
+      allow write: if false;
+    }
+
+    match /leaderboards/{subject}/entries/{uid} {
+      allow read: if signedIn();
+      allow write: if false;
+    }
+
+    match /contests/{id} {
+      allow read: if signedIn();
+      allow write: if false;
+      match /participants/{uid} {
+        allow read: if signedIn();
+        allow write: if false;
+      }
+    }
+
+    match /solutions/{id} {
+      allow read: if signedIn();
+      allow write: if false;     // tạo qua API để kiểm tra điều kiện
+      match /votes/{uid} { allow read: if isOwner(uid); allow write: if false; }
+    }
+
+    match /daily/{id} { allow read: if signedIn(); allow write: if false; }
+    match /aiCache/{id} { allow read, write: if false; }
+  }
+}
+
