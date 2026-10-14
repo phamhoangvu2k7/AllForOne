@@ -17,9 +17,8 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  const db = getDb()
-
   try {
+    const db = getDb()
     // 1) Seed Topics
     const topicBatch = db.batch()
     for (const t of topicsData as any[]) {
