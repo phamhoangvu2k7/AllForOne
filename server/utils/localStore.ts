@@ -251,6 +251,36 @@ export class MockFirestore {
     }
     return await updateFunction(tx)
   }
+
+  batch() {
+    initStore()
+    const ops: Array<() => Promise<void>> = []
+    return {
+      set(ref: MockDocRef, data: Record<string, any>, options?: { merge?: boolean }) {
+        ops.push(async () => {
+          await ref.set(data, options)
+        })
+        return this
+      },
+      update(ref: MockDocRef, data: Record<string, any>) {
+        ops.push(async () => {
+          await ref.update(data)
+        })
+        return this
+      },
+      delete(ref: MockDocRef) {
+        ops.push(async () => {
+          await ref.delete()
+        })
+        return this
+      },
+      async commit() {
+        for (const op of ops) {
+          await op()
+        }
+      },
+    }
+  }
 }
 
 export const mockDb = new MockFirestore()
