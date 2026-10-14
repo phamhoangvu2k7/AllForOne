@@ -24,11 +24,16 @@ function getAdminApp(): App {
   }
 
   if (c.firebaseProjectId && c.firebaseClientEmail && c.firebasePrivateKey) {
+    const cleanKey = c.firebasePrivateKey
+      .trim()
+      .replace(/^["']|["']$/g, '')
+      .replace(/\\n/g, '\n')
+
     return initializeApp({
       credential: cert({
         projectId: c.firebaseProjectId,
         clientEmail: c.firebaseClientEmail,
-        privateKey: c.firebasePrivateKey.replace(/\\n/g, '\n'),
+        privateKey: cleanKey,
       }),
     })
   }

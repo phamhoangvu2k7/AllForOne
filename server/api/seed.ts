@@ -88,11 +88,16 @@ export default defineEventHandler(async (event) => {
     }
   } catch (err: any) {
     console.error('Seed API error:', err)
-    throw createError({
-      statusCode: 500,
-      statusMessage: 'seed_failed',
-      message: err.message || 'Lỗi khi nạp dữ liệu vào Firestore.',
-    })
+    const isNotFound = err.code === 5 || String(err.message).includes('NOT_FOUND')
+    return {
+      success: false,
+      error: err.message || 'Lỗi khi nạp dữ liệu vào Firestore.',
+      code: err.code,
+      reason: isNotFound ? 'FIRESTORE_DATABASE_NOT_CREATED' : 'UNKNOWN_ERROR',
+      hint: isNotFound
+        ? 'Cực kỳ quan trọng: Bạn chưa bấm "Create database" trên Firebase Console! Vào Firebase Console -> Build -> Firestore Database -> bấm nút [Create database] để khởi tạo database trước.'
+        : 'Vui lòng kiểm tra lại cấu hình Firebase Admin Key trên Vercel Environment Variables.',
+    }
   }
 })
 
