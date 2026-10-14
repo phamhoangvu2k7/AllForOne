@@ -2,20 +2,22 @@
 definePageMeta({ middleware: 'auth' })
 
 const api = useApi()
-const profile = ref<any>(null)
-const leaderboard = ref<any[]>([])
+const profile = useState<any>('profile_cache', () => null)
+const leaderboard = useState<any[]>('leaderboard_cache', () => [])
 const currentSubject = ref<'toan' | 'ly'>('toan')
-const loading = ref(true)
+const loading = ref(!profile.value)
 
 const fetchProfile = async () => {
-  loading.value = true
+  if (!profile.value) {
+    loading.value = true
+  }
   try {
     const [p, lb] = await Promise.all([
       api<any>('/api/profile'),
       api<any[]>(`/api/leaderboard?subject=${currentSubject.value}`),
     ])
-    profile.value = p
-    leaderboard.value = lb || []
+    if (p) profile.value = p
+    if (lb) leaderboard.value = lb
   } catch (err) {
     console.error('Fetch profile error:', err)
   } finally {

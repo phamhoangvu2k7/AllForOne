@@ -1,7 +1,27 @@
 <script setup lang="ts">
 const { user, logout, loginDemo } = useAuthUser()
 const router = useRouter()
+const api = useApi()
 const mobileMenuOpen = ref(false)
+
+const topicsCache = useState<Record<string, any[]>>('topics_cache', () => ({}))
+const contestsCache = useState<any[]>('contests_cache', () => [])
+
+const prefetchPractice = () => {
+  if (!topicsCache.value.toan) {
+    api<any[]>('/api/topics?subject=toan')
+      .then((res) => { if (res) topicsCache.value.toan = res })
+      .catch(() => {})
+  }
+}
+
+const prefetchContests = () => {
+  if (!contestsCache.value.length) {
+    api<any[]>('/api/contests')
+      .then((res) => { if (res) contestsCache.value = res })
+      .catch(() => {})
+  }
+}
 
 const handleLogout = async () => {
   await logout()
@@ -35,6 +55,7 @@ const handleLogout = async () => {
               to="/practice"
               class="px-3.5 py-2 rounded-lg text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50/60 transition-colors"
               active-class="text-blue-600 bg-blue-50 font-semibold"
+              @mouseenter="prefetchPractice"
             >
               Luyện từng câu
             </NuxtLink>
@@ -42,6 +63,7 @@ const handleLogout = async () => {
               to="/contests"
               class="px-3.5 py-2 rounded-lg text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50/60 transition-colors flex items-center gap-1.5"
               active-class="text-blue-600 bg-blue-50 font-semibold"
+              @mouseenter="prefetchContests"
             >
               Contest tuần
               <span class="inline-flex items-center px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-rose-500 text-white animate-pulse">

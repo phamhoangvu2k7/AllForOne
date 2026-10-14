@@ -3,7 +3,28 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   ssr: false,
   modules: ['@nuxtjs/tailwindcss'],
-  devtools: { enabled: true },
+  devtools: { enabled: false },
+
+  routeRules: {
+    '/api/topics': { headers: { 'cache-control': 'public, s-maxage=60, stale-while-revalidate=300' } },
+    '/api/contests': { headers: { 'cache-control': 'public, s-maxage=60, stale-while-revalidate=300' } },
+    '/api/leaderboard': { headers: { 'cache-control': 'public, s-maxage=30, stale-while-revalidate=120' } },
+  },
+
+  vite: {
+    build: {
+      chunkSizeWarningLimit: 1200,
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('katex')) return 'vendor-katex'
+            if (id.includes('chart.js') || id.includes('vue-chartjs')) return 'vendor-charts'
+            if (id.includes('marked') || id.includes('dompurify')) return 'vendor-markdown'
+          },
+        },
+      },
+    },
+  },
 
   runtimeConfig: {
     // --- server only ---

@@ -2,13 +2,18 @@
 definePageMeta({ middleware: 'auth' })
 
 const api = useApi()
-const contests = ref<any[]>([])
-const loading = ref(true)
+const contests = useState<any[]>('contests_cache', () => [])
+const loading = ref(!contests.value.length)
 
 onMounted(async () => {
+  if (!contests.value.length) {
+    loading.value = true
+  }
   try {
     const list = await api<any[]>('/api/contests')
-    contests.value = list || []
+    if (list?.length) {
+      contests.value = list
+    }
   } catch (err) {
     console.error('Fetch contests error:', err)
   } finally {

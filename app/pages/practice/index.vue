@@ -5,15 +5,21 @@ const api = useApi()
 const router = useRouter()
 
 const subject = ref<'toan' | 'ly'>('toan')
-const topics = ref<any[]>([])
-const loading = ref(true)
+const topicsCache = useState<Record<string, any[]>>('topics_cache', () => ({}))
+const topics = computed(() => topicsCache.value[subject.value] || [])
+const loading = ref(!topics.value.length)
 const startingTopicId = ref<string | null>(null)
 
 const fetchTopics = async () => {
-  loading.value = true
+  // Chỉ hiện skeleton nếu chưa từng tải dữ liệu trước đó
+  if (!topics.value.length) {
+    loading.value = true
+  }
   try {
     const res = await api<any[]>(`/api/topics?subject=${subject.value}`)
-    topics.value = res || []
+    if (res?.length) {
+      topicsCache.value[subject.value] = res
+    }
   } catch (err) {
     console.error('Fetch topics error:', err)
   } finally {
