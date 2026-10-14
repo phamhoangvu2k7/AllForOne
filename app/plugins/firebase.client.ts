@@ -11,6 +11,14 @@ export default defineNuxtPlugin(() => {
   const user = useState<any>('auth-user', () => null)
   const ready = useState<boolean>('auth-ready', () => false)
 
+  // Khôi phục session demo nếu có trong localStorage
+  try {
+    const saved = localStorage.getItem('allforone_demo_user')
+    if (saved) {
+      user.value = JSON.parse(saved)
+    }
+  } catch {}
+
   if (c.firebaseApiKey && c.firebaseProjectId) {
     try {
       const app =
@@ -31,9 +39,14 @@ export default defineNuxtPlugin(() => {
       }
 
       onAuthStateChanged(auth, (u) => {
-        // Chỉ ghi đè nếu không phải đang dùng demo user
-        if (!user.value || !user.value.isDemo) {
+        if (u) {
           user.value = u
+        } else if (!user.value || !user.value.isDemo) {
+          // Kiểm tra lại demo user
+          try {
+            const saved = localStorage.getItem('allforone_demo_user')
+            if (saved) user.value = JSON.parse(saved)
+          } catch {}
         }
         ready.value = true
       })

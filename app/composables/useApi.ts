@@ -10,8 +10,12 @@ export function useApi() {
       } catch (err) {
         console.warn('Failed to get Firebase token:', err)
       }
-    } else if (user.value && typeof user.value.getIdToken === 'function') {
-      token = await user.value.getIdToken()
+    } else if (user.value) {
+      if (typeof user.value.getIdToken === 'function') {
+        token = await user.value.getIdToken()
+      } else if (user.value.uid) {
+        token = `demo-token:${user.value.uid}:${encodeURIComponent(user.value.displayName || 'Nguyễn Văn A')}`
+      }
     }
 
     return $fetch<T>(url, {
